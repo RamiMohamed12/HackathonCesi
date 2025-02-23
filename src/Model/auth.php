@@ -1,18 +1,17 @@
 <?php
 require 'db.php';
-session_start(); // Start the session
 
 function loginUser($pdo, $email, $password) {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->execute(['email' => $email]);                                         
-    $user = $stmt->fetch();                                                      
+    // Query the existing "users" table
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($password, $user['password'])) {                
-        $_SESSION['user_id'] = $user['id'];                                      
-        header('Location: home.html');
-        exit;
-    } else {
-        echo 'Incorrect email or password';                                       
+    // Check password and, when verified, assign a default role since no role field exists.
+    if ($user && password_verify($password, $user['password'])) {
+        $user['user_type'] = 'student';
+        return $user;
     }
+    return false;
 }
-
+?>
