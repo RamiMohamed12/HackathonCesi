@@ -1,7 +1,14 @@
-document.getElementById("login-btn").addEventListener("click", async function () {
+document.querySelector(".loginbutton").addEventListener("click", async function () {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
-    const messageBox = document.getElementById("message");
+    
+    // Create or select a message box dynamically
+    let messageBox = document.getElementById("message");
+    if (!messageBox) {
+        messageBox = document.createElement("p");
+        messageBox.id = "message";
+        document.querySelector(".login").appendChild(messageBox);
+    }
 
     if (!email || !password) {
         messageBox.style.color = "red";
@@ -9,7 +16,9 @@ document.getElementById("login-btn").addEventListener("click", async function ()
         return;
     }
 
-    document.getElementById("login-btn").disabled = true;
+    // Disable the button to prevent multiple clicks
+    const loginBtn = document.querySelector(".loginbutton");
+    loginBtn.disabled = true;
 
     try {
         const response = await fetch("../Model/login.php", {
@@ -21,12 +30,12 @@ document.getElementById("login-btn").addEventListener("click", async function ()
         });
 
         const data = await response.json();
-        
+
         if (data.success) {
             messageBox.style.color = "green";
-            messageBox.innerText = "Logged in successfully. Redirecting...";
+            messageBox.innerText = "Login successful! Redirecting...";
             setTimeout(() => {
-                window.location.href = "../View/home.html"; // Redirect to dashboard
+                window.location.href = "home.html";
             }, 1500);
         } else {
             messageBox.style.color = "red";
@@ -37,6 +46,6 @@ document.getElementById("login-btn").addEventListener("click", async function ()
         messageBox.style.color = "red";
         messageBox.innerText = "Something went wrong. Please try again.";
     } finally {
-        document.getElementById("login-btn").disabled = false;
+        loginBtn.disabled = false;
     }
 });
