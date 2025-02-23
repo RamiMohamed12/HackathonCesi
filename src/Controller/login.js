@@ -2,7 +2,6 @@ document.querySelector(".loginbutton").addEventListener("click", async function 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     
-    // Create or select a message box dynamically
     let messageBox = document.getElementById("message");
     if (!messageBox) {
         messageBox = document.createElement("p");
@@ -16,12 +15,11 @@ document.querySelector(".loginbutton").addEventListener("click", async function 
         return;
     }
 
-    // Disable the button to prevent multiple clicks
     const loginBtn = document.querySelector(".loginbutton");
     loginBtn.disabled = true;
 
     try {
-        const response = await fetch("../Model/login.php", {
+        const response = await fetch("../Model/login.php", { // ✅ Correct path
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -33,13 +31,13 @@ document.querySelector(".loginbutton").addEventListener("click", async function 
 
         if (data.success) {
             messageBox.style.color = "green";
-            messageBox.innerText = "Login successful! Redirecting...";
+            messageBox.innerText = data.message + " Redirecting...";
             setTimeout(() => {
-                window.location.href = "../View/home.html";
+                window.location.href = "../View/home.html"; // ✅ Redirect after login
             }, 1500);
         } else {
             messageBox.style.color = "red";
-            messageBox.innerText = data.error;
+            messageBox.innerText = data.message;
         }
     } catch (error) {
         console.error("Login request failed:", error);

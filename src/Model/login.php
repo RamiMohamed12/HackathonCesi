@@ -2,9 +2,12 @@
 session_start();
 require 'db.php';
 
-// Enable error reporting for debugging
+// Enable error reporting for debugging (REMOVE in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// ✅ Set JSON response type
+header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"] ?? '');
@@ -18,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION["user_id"] = $user["id"];
 
+            // ✅ Send JSON response instead of redirect
             echo json_encode([
                 "success" => true,
                 "message" => "Login successful"
@@ -38,4 +42,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-
