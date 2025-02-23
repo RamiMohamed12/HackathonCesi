@@ -4,7 +4,7 @@ document.getElementById("logout-btn").addEventListener("click", async function (
     logoutBtn.disabled = true; // Prevent multiple clicks
 
     try {
-        const response = await fetch("../logout.php", {
+        const response = await fetch("../Model/logout.php", {
             method: "POST",
             credentials: "include" // Ensure cookies/session are sent
         });
