@@ -35,7 +35,7 @@ document.querySelector(".loginbutton").addEventListener("click", async function 
             messageBox.style.color = "green";
             messageBox.innerText = "Login successful! Redirecting...";
             setTimeout(() => {
-                window.location.href = "home.html";
+                window.location.href = "../View/home.html";
             }, 1500);
         } else {
             messageBox.style.color = "red";
