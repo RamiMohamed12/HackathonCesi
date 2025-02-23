@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --forest: #11998e;
+    --sage: #38ef7d;
+    --golden: #bb8a52;
+    --amber: #ffba00;
+    --white: #fff;
+    --gray: #9b9b9b;
+    --gradient-primary: linear-gradient(135deg, #11998e, #38ef7d);
+    --gradient-accent: linear-gradient(135deg, #bb8a52, #ffba00);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: white;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.container {
+    display: flex;
+    border-radius: 30px;
+    height: 100vh;
+    overflow: hidden;
+    background: white;
+}
+
+.content-area {
+    width: 10000px;
+    display: flex;
+    padding: 2rem 4rem;
+    gap: 4rem;
+    background: white;
+}
+
+.left-side {
+    flex: 0 0 320px;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    width:800px;
+    left: 0;
+    bottom: 0;
+    background:var(--forest);
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.right-side {
+    flex: 1;
+    padding: 20px;
+    margin-left: 800px;
+    width: 200px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: var(--white);
+}
+
+.right-side h3 {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 10px;
+    z-index: 10;
+}
+
+.right-side::-webkit-scrollbar {
+    width: 8px;
+}
+
+.right-side::-webkit-scrollbar-thumb {
+    background: #a3a3a3;
+    border-radius: 10px;
+}
+
+.right-side::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    color: var(--sage);
+}
+
+h3 {
+    line-height: 1.2;
+    color: rgb(0, 34, 70);
+    margin-bottom: 2rem;
+}
+
+
+.search-container {
+    margin-top: 200px;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(12, 59, 46, 0.1);
+    transition: all 0.3s ease;
+}
+
+.search-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-tabs button {
+    padding: 1rem 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 12px;
+    font-weight: 500;
+    color: rgb(0, 34, 70);
+    transition: all 0.3s ease;
+}
+
+.search-tabs button.active {
+    background: var(--gradient-primary);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(12, 59, 46, 0.2);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 0.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--sage);
+    box-shadow: 0 0 0 4px rgba(109, 151, 115, 0.1);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    padding: 1rem;
+    background: transparent;
+    font-size: 1rem;
+    color: rgb(0, 34, 70);
+    outline: none;
+}
+        
+.search-box button {
+    padding: 1rem;
+    border: none;
+    background: var(--gradient-accent);
+    color: var(--white);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.search-box button:hover {
+    transform: scale(1.05);
+}
+
+
+
+.featured-tags {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+
+
+.tag {
+    padding: 0.5rem 1rem;
+    background: rgba(109, 151, 115, 0.1);
+    border-radius: 20px;
+    color: var(--forest);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+
+.tag:hover {
+    background: var(--sage);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+.stage-card {
+    background: var(--white);
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+
+.stage-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+}
+
+
+.stage-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgb(0, 34, 70);
+    margin: 0.5rem 0;
+}
+
+
+.stage-card {
+    margin-bottom: 2rem;
+}
+
+.stage-title {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: start;
+}
+
+
+.stage-card h3 {
+    color: var(--forest); 
+    font-size: 1.5rem; 
+    margin: 1rem 0;
+}
+
+.postuler {
+    display: flex; 
+    gap: 1rem; 
+    margin-top: 2rem;
+}
+
+.bouton-postuler {
+    flex: 1; 
+    padding: 1rem; 
+    background: var(--gradient-primary); 
+    color: var(--white); 
+    border: none; 
+    border-radius: 12px; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+}
+
