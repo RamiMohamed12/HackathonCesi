@@ -4,7 +4,7 @@ require 'db.php'; // Include your database connection file
 try {
     // Auto-generate user details
     $name = "Admin";
-    $email = "admin" . rand(1000, 9999) . "@example.com"; // Unique email each time
+    $email = "admin" ."@example.com"; // Unique email each time
     $plain_password = "admin123"; // Change this as needed
     $hashed_password = password_hash($plain_password, PASSWORD_BCRYPT);
     $phone = strval(rand(1000000000, 9999999999)); // Random 10-digit phone number

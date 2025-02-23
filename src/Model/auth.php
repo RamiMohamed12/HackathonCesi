@@ -1,27 +1,17 @@
 <?php
 require 'db.php';
-session_start();
-
-header('Content-Type: application/json'); // ✅ Ensure JSON output
 
 function loginUser($pdo, $email, $password) {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch();
+    // Query the existing "users" table
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Check password and, when verified, assign a default role since no role field exists.
     if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-
-        // ✅ Return JSON response instead of redirecting
-        echo json_encode([
-            "success" => true,
-            "message" => "Login successful"
-        ]);
-    } else {
-        echo json_encode([
-            "success" => false,
-            "message" => "Incorrect email or password"
-        ]);
+        $user['user_type'] = 'student';
+        return $user;
     }
+    return false;
 }
 ?>
