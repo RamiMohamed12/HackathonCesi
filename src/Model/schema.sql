@@ -21,14 +21,13 @@ CREATE TABLE rides (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bookings Table
 CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     ride_id INT NOT NULL,
-    passenger_id INT NOT NULL,
-    booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (ride_id) REFERENCES rides(id) ON DELETE CASCADE,
-    FOREIGN KEY (passenger_id) REFERENCES users(id) ON DELETE CASCADE,
-    UNIQUE (ride_id, passenger_id)
+    booked_seats INT NOT NULL CHECK (booked_seats > 0),
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (ride_id) REFERENCES rides(id) ON DELETE CASCADE
 );
 

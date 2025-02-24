@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     data.rides.forEach(ride => {
                         let iconClass = getRideIcon(ride.ride_type);
 
+                        // Create the card and set the ride id as a data attribute
                         const card = document.createElement("div");
                         card.className = "stage-card";
+                        card.setAttribute("data-ride-id", ride.id);
                         card.innerHTML = `
                             <h3>
                                 <i class="fa-solid ${iconClass}"></i>
@@ -86,7 +88,50 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Event delegation for Reserve buttons
+    ridesContainer.addEventListener("click", function (e) {
+        if (e.target && e.target.classList.contains("bouton-postuler")) {
+            const card = e.target.closest(".stage-card");
+            const rideId = card.getAttribute("data-ride-id");
+            
+            // Prompt user for number of seats to book (you can customize this as needed)
+            const bookedSeats = prompt("Enter the number of seats you want to reserve:");
+            if (!bookedSeats || isNaN(bookedSeats) || bookedSeats <= 0) {
+                alert("Invalid number of seats.");
+                return;
+            }
+
+            // In a real app, user_id should come from session/authentication; here it's hard-coded as 1
+            const user_id = 1;
+
+            // Prepare form data
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            formData.append("ride_id", rideId);
+            formData.append("booked_seats", bookedSeats);
+
+            // Send POST request to booking.php
+            fetch("booking.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Booking successful!");
+                    // Optionally, update the ride's available seats in the UI or refetch rides.
+                    fetchRides(searchInput.value.trim());
+                } else {
+                    alert("Booking failed: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error processing booking:", error);
+                alert("An error occurred while booking.");
+            });
+        }
+    });
+
     // Load all rides initially
     fetchRides();
 });
-
