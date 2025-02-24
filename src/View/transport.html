@@ -4,122 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transport Page</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="transport.css">
 </head>
 <body>
     <div class="container">
-        
         <div class="content-area">
+            
+            <!-- Left Section - Search Box -->
             <div class="left-side">
-                
                 <div class="search-container">
+                    <h3>How do you want to go?</h3>
 
-                    <h3>How do you want to go ?</h3>
-                    <div class="featured-tags">                
+                    <!-- Featured Transport Types -->
+                    <div class="featured-tags">
                         <div class="tag">Car</div>
                         <div class="tag">Bus</div>
                         <div class="tag">Train</div>
                         <div class="tag">Metro</div>
                     </div>
+
                     <br>
 
+                    <!-- Search Tabs -->
                     <div class="search-tabs">
-                        <button class="active">
-                            <i class="fas fa-th-list"></i> All
-                        </button>
-                
-                        <button>
-                            <i class="fas fa-clock"></i> Recent
-                        </button>
-                
+                        <button class="active">All</button>
+                        <button>Recent</button>
                     </div>
-                    
-                    
-                    <div class="search-box">    
-                        <input type="text" placeholder="Where do you want to go?">
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
+
+                    <!-- Search Input -->
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Where do you want to go?">
+                        <button id="search-button"><i class="fas fa-search"></i></button>
                     </div>
-    
                 </div>
-    
             </div>
-    
-            
+
+            <!-- Right Section - Rides List -->
             <div id="rides-container" class="right-side">        
-                <div class="stage-card">
-                    
-                    <h3>
-                        <i class="fa-solid fa-bus"></i>
-                        Bus Trip
-                    </h3>
-    
-                    
-                    <div class="stage-detail">                
+                
+                <!-- Bus Trip Card -->
+                <div class="ride-card">
+                    <h3><i class="fa-solid fa-bus"></i> Bus Trip</h3>
+
+                    <div class="ride-detail">
                         <i class="fas fa-building" style="color: var(--sage);"></i>
                         <span>Start Point</span>
                     </div>
-                    
-                    <div class="stage-detail">
+
+                    <div class="ride-detail">
                         <i class="fas fa-map-marker-alt" style="color: var(--golden);"></i>
                         <span>Destination</span>
                     </div>
-                    
-                    <div class="stage-detail">
+
+                    <div class="ride-detail">
                         <i class="fas fa-clock" style="color: var(--sage);"></i>
                         <span>3 hours</span>
                     </div>
-                
-                    
-                    <div class="postuler">
-                        <button class="bouton-postuler">
-                            Reserve
-                        </button>
-                    
+
+                    <div class="reserve">
+                        <button class="reserve-button">Reserve</button>
                     </div>
                 </div>
 
-                <div class="stage-card">
-                    
-                    <h3> <i class="fa-solid fa-car"></i>
-                        Car Trip
-                    </h3>
-    
-                    
-                    <div class="stage-detail">                
+                <!-- Car Trip Card -->
+                <div class="ride-card">
+                    <h3><i class="fa-solid fa-car"></i> Car Trip</h3>
+
+                    <div class="ride-detail">
                         <i class="fas fa-building" style="color: var(--sage);"></i>
                         <span>Start Point</span>
                     </div>
-                    
-                    <div class="stage-detail">
+
+                    <div class="ride-detail">
                         <i class="fas fa-map-marker-alt" style="color: var(--golden);"></i>
                         <span>Destination</span>
                     </div>
-                    
-                    <div class="stage-detail">
+
+                    <div class="ride-detail">
                         <i class="fas fa-clock" style="color: var(--sage);"></i>
                         <span>2h 30min</span>
                     </div>
-                
-                    
-                    <div class="postuler">
-                        <button class="bouton-postuler">
-                            Reserve
-                        </button>
-                    
+
+                    <div class="reserve">
+                        <button class="reserve-button">Reserve</button>
                     </div>
                 </div>
 
-                
-            </div>
-        </div>
-    </div>
+            </div> <!-- End of right-side -->
+        </div> <!-- End of content-area -->
+    </div> <!-- End of container -->
 
+    <!-- JavaScript -->
     <script src="/Controller/rides.js"></script>
     <script src="home.js"></script>
-
 </body>
 </html>
+

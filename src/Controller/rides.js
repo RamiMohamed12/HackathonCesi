@@ -1,74 +1,92 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("/Model/getRides.php", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const ridesContainer = document.getElementById("rides-container");
-        ridesContainer.innerHTML = ""; // Clear existing content
+    const ridesContainer = document.getElementById("rides-container");
+    const searchInput = document.querySelector(".search-box input");
+    const searchButton = document.querySelector(".search-box button");
+    const filterButtons = document.querySelectorAll(".search-tabs button, .featured-tags .tag");
 
-        if (data.success) {
-            data.rides.forEach(ride => {
-                // Determine the icon class based on ride_type
-                let iconClass;
-                switch (ride.ride_type) {
-                    case "Bus":
-                        iconClass = "fa-bus";
-                        break;
-                    case "Car":
-                        iconClass = "fa-car";
-                        break;
-                    case "Metro":
-                        iconClass = "fa-subway"; // using subway as an icon for metro
-                        break;
-                    case "Train":
-                        iconClass = "fa-train";
-                        break;
-                    default:
-                        iconClass = "fa-road";
+    function fetchRides(query = "", filter = "All") {
+        fetch(`/Model/getRides.php?query=${encodeURIComponent(query)}&filter=${encodeURIComponent(filter)}`)
+            .then(response => response.json())
+            .then(data => {
+                ridesContainer.innerHTML = ""; // Clear previous results
+
+                if (data.success && data.rides.length > 0) {
+                    data.rides.forEach(ride => {
+                        let iconClass = getRideIcon(ride.ride_type);
+
+                        const card = document.createElement("div");
+                        card.className = "stage-card";
+                        card.innerHTML = `
+                            <h3>
+                                <i class="fa-solid ${iconClass}"></i>
+                                ${ride.ride_type} Trip
+                            </h3>
+                            <div class="stage-detail">
+                                <i class="fas fa-building" style="color: var(--sage);"></i>
+                                <span>${ride.startpoint}</span>
+                            </div>
+                            <div class="stage-detail">
+                                <i class="fas fa-map-marker-alt" style="color: var(--golden);"></i>
+                                <span>${ride.destination}</span>
+                            </div>
+                            <div class="stage-detail">
+                                <i class="fas fa-clock" style="color: var(--sage);"></i>
+                                <span>${ride.dateTime}</span>
+                            </div>
+                            <div class="stage-detail">
+                                <i class="fas fa-euro-sign" style="color: var(--sage);"></i>
+                                <span>${ride.price} DA</span>
+                            </div>
+                            <div class="postuler">
+                                <button class="bouton-postuler">Reserve</button>
+                            </div>
+                        `;
+                        ridesContainer.appendChild(card);
+                    });
+                } else {
+                    ridesContainer.innerHTML = "<p>No matching rides found.</p>";
                 }
-
-                // Create a new ride card element
-                const card = document.createElement("div");
-                card.className = "stage-card";
-                card.innerHTML = `
-                    <h3>
-                        <i class="fa-solid ${iconClass}"></i>
-                        ${ride.ride_type} Trip
-                    </h3>
-                    <div class="stage-detail">
-                        <i class="fas fa-building" style="color: var(--sage);"></i>
-                        <span>${ride.startpoint}</span>
-                    </div>
-                    <div class="stage-detail">
-                        <i class="fas fa-map-marker-alt" style="color: var(--golden);"></i>
-                        <span>${ride.destination}</span>
-                    </div>
-                    <div class="stage-detail">
-                        <i class="fas fa-clock" style="color: var(--sage);"></i>
-                        <span>${ride.dateTime}</span>
-                    </div>
-                    <div class="stage-detail">
-                        <i class="fas fa-euro-sign" style="color: var(--sage);"></i>
-                        <span>${ride.price} DA</span>
-                    </div>
-                    <div class="postuler">
-                        <button class="bouton-postuler">Reserve</button>
-                    </div>
-                `;
-                ridesContainer.appendChild(card);
+            })
+            .catch(error => {
+                console.error("Error fetching rides:", error);
+                ridesContainer.innerHTML = "<p>Unable to load rides at this time.</p>";
             });
-        } else {
-            console.error("Error retrieving rides:", data.message);
-            ridesContainer.innerHTML = "<p>There was an error loading the rides.</p>";
+    }
+
+    function getRideIcon(rideType) {
+        switch (rideType) {
+            case "Bus": return "fa-bus";
+            case "Car": return "fa-car";
+            case "Metro": return "fa-subway";
+            case "Train": return "fa-train";
+            default: return "fa-road";
         }
-    })
-    .catch(error => {
-        console.error("Error fetching rides:", error);
-        const ridesContainer = document.getElementById("rides-container");
-        ridesContainer.innerHTML = "<p>Unable to load rides at this time.</p>";
+    }
+
+    // Search by input text
+    searchButton.addEventListener("click", () => {
+        const query = searchInput.value.trim();
+        fetchRides(query);
     });
+
+    // Allow "Enter" key for search
+    searchInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            fetchRides(searchInput.value.trim());
+        }
+    });
+
+    // Handle filter buttons (All, Recent, Transport types)
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            filterButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+            const filterType = button.textContent.trim();
+            fetchRides(searchInput.value.trim(), filterType);
+        });
+    });
+
+    // Load all rides initially
+    fetchRides();
 });
+
