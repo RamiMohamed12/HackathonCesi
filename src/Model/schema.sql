@@ -8,20 +8,20 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Rides Table
+-- Rides Table (Updated)
 CREATE TABLE rides (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    driver_id INT NOT NULL,
-    departure VARCHAR(100) NOT NULL,
+    startpoint VARCHAR(100) NOT NULL,  -- Renamed from departure
     destination VARCHAR(100) NOT NULL,
     dateTime DATETIME NOT NULL,
     availableSeats INT NOT NULL CHECK (availableSeats > 0),
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (driver_id) REFERENCES users(id) ON DELETE CASCADE
+    ride_type ENUM('Bus', 'Car', 'Metro', 'Train') NOT NULL,
+    phone VARCHAR(10) NOT NULL,  -- Added phone number field
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bookings Table (optional, if you add booking feature later)
+-- Bookings Table
 CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ride_id INT NOT NULL,
@@ -31,3 +31,4 @@ CREATE TABLE bookings (
     FOREIGN KEY (passenger_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE (ride_id, passenger_id)
 );
+
