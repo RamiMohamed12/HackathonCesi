@@ -2,29 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <div class="login">
         <h1>Welcome</h1>
-        <form id="loginForm">
-            <div class="form__group field">
-                <input type="email" class="form__field" placeholder="Email" id="email" required />
-                <label for="email" class="form__label">Email</label>
-            </div>
-            <div class="form__group field">
-                <input type="password" class="form__field" placeholder="Password" id="password" required />
-                <label for="password" class="form__label">Password</label>
-            </div>
-            <br>
-            <div>
-                <button type="submit" class="loginbutton">Login</button>
-            </div>
-        </form>
-        <div id="error-message" style="color: red;"></div>
+
+        <div class="form__group field">
+            <input type="email" class="form__field" placeholder="Email" id='email' required />
+            <label for="email" class="form__label">Email</label>
+        </div>
+
+        <div class="form__group field">
+            <input type="password" class="form__field" placeholder="Password"  id='name' required />
+            <label for="password" class="form__label">Password</label>
+        </div><br>
+
+        <div>
+            <button type="submit" class="loginbutton">Login</button>
+        </div>
+        <hr>
+        <h6>Dont have an account ?
+            <a href="signup.html"> Sign Up</a>
+        </h6>
+        
     </div>
-    <script src="/Controller/login.js"></script>
+    
 </body>
+<script src="login.js" > </script>
 </html>
