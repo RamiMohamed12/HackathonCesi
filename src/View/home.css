@@ -96,6 +96,7 @@ h3 {
 .right-side {
     flex: 1;
     position: relative;
+    margin-top: 150px;
 }
 
 
